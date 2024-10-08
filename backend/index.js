@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 // app.use("/uploads", express.static("uploads"));
 
 // avaliable routes
-app.use("/api/menuitems", require("./routes/menuitemRoutes"));
+app.use("/api/menuitem", require("./routes/menuitemRoutes"));
 app.use("/api/auth", require("./routes/userRoutes"));
 
 

@@ -16,7 +16,7 @@ const menuitemValidationSchema = Joi.object({
 });
 
 // Create a new menu item (Admin only)
-router.post("/create", adminAuth, async (req, res) => {
+router.post("/add", adminAuth, async (req, res) => {
   // Validate the input
   const { error } = menuitemValidationSchema.validate(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
@@ -42,7 +42,7 @@ router.post("/create", adminAuth, async (req, res) => {
 });
 
 // Get all menu items
-router.get("/", async (req, res) => {
+router.get("/gellfullmenu", async (req, res) => {
   try {
     const menuitems = await Menuitem.find();
     res.status(200).json(menuitems);
