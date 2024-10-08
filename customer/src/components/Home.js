@@ -1,10 +1,12 @@
 import React from 'react'
+import Menu from './Menu'
 
 const Home = () => {
   return (
-    <div>
+    <>
       This is a home page
-    </div>
+      <Menu></Menu>
+    </>
   )
 }
 
