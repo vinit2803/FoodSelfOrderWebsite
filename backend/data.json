@@ -1,0 +1,362 @@
+[
+    {
+        "name": "Sweet and Sour Chicken",
+        "price": 12.99,
+        "description": "Crispy chicken in a sweet and tangy sauce with pineapple and bell peppers.",
+        "category": "Chinese",
+        "image": "https://example.com/images/sweet-and-sour-chicken.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Kung Pao Chicken",
+        "price": 11.99,
+        "description": "Spicy stir-fried chicken with peanuts and vegetables.",
+        "category": "Chinese",
+        "image": "https://example.com/images/kung-pao-chicken.jpg",
+        "available": "Yes",
+        "notes": "Spicy"
+    },
+    {
+        "name": "Beef Chow Mein",
+        "price": 13.99,
+        "description": "Stir-fried noodles with tender beef and fresh vegetables.",
+        "category": "Chinese",
+        "image": "https://example.com/images/beef-chow-mein.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Mapo Tofu",
+        "price": 10.99,
+        "description": "Spicy tofu dish with minced meat in a rich sauce.",
+        "category": "Chinese",
+        "image": "https://example.com/images/mapo-tofu.jpg",
+        "available": "Yes",
+        "notes": "Vegetarian option available"
+    },
+    {
+        "name": "Peking Duck",
+        "price": 18.99,
+        "description": "Crispy duck served with pancakes and hoisin sauce.",
+        "category": "Chinese",
+        "image": "https://example.com/images/peking-duck.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Spring Rolls",
+        "price": 6.99,
+        "description": "Crispy rolls filled with vegetables and served with dipping sauce.",
+        "category": "Chinese",
+        "image": "https://example.com/images/spring-rolls.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Dumplings",
+        "price": 8.99,
+        "description": "Steamed dumplings filled with pork and vegetables.",
+        "category": "Chinese",
+        "image": "https://example.com/images/dumplings.jpg",
+        "available": "Yes",
+        "notes": "Can be fried upon request"
+    },
+    {
+        "name": "Fried Rice",
+        "price": 9.99,
+        "description": "Stir-fried rice with vegetables and your choice of protein.",
+        "category": "Chinese",
+        "image": "https://example.com/images/fried-rice.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Szechuan Noodles",
+        "price": 11.99,
+        "description": "Spicy noodles with vegetables and a special Szechuan sauce.",
+        "category": "Chinese",
+        "image": "https://example.com/images/szechuan-noodles.jpg",
+        "available": "Yes",
+        "notes": "Very spicy"
+    },
+    {
+        "name": "Egg Drop Soup",
+        "price": 4.99,
+        "description": "Light and fluffy egg soup with scallions.",
+        "category": "Chinese",
+        "image": "https://example.com/images/egg-drop-soup.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Tacos Al Pastor",
+        "price": 10.99,
+        "description": "Marinated pork served in corn tortillas with pineapple.",
+        "category": "Mexican",
+        "image": "https://example.com/images/tacos-al-pastor.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Chicken Enchiladas",
+        "price": 11.99,
+        "description": "Corn tortillas filled with shredded chicken and topped with cheese.",
+        "category": "Mexican",
+        "image": "https://example.com/images/chicken-enchiladas.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Chiles Rellenos",
+        "price": 12.99,
+        "description": "Stuffed poblano peppers with cheese and meat.",
+        "category": "Mexican",
+        "image": "https://example.com/images/chiles-rellenos.jpg",
+        "available": "Yes",
+        "notes": "Vegetarian option available"
+    },
+    {
+        "name": "Guacamole and Chips",
+        "price": 6.99,
+        "description": "Freshly made guacamole served with tortilla chips.",
+        "category": "Mexican",
+        "image": "https://example.com/images/guacamole-chips.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Mole Poblano",
+        "price": 14.99,
+        "description": "Chicken in a rich mole sauce with chocolate and spices.",
+        "category": "Mexican",
+        "image": "https://example.com/images/mole-poblano.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Burrito Supreme",
+        "price": 9.99,
+        "description": "Flour tortilla stuffed with beans, rice, and choice of protein.",
+        "category": "Mexican",
+        "image": "https://example.com/images/burrito-supreme.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Quesadilla",
+        "price": 8.99,
+        "description": "Grilled flour tortilla filled with cheese and served with salsa.",
+        "category": "Mexican",
+        "image": "https://example.com/images/quesadilla.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Sopes",
+        "price": 10.49,
+        "description": "Thick corn tortillas topped with beans, meat, and vegetables.",
+        "category": "Mexican",
+        "image": "https://example.com/images/sopes.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Ceviche",
+        "price": 12.99,
+        "description": "Fresh fish marinated in lime juice with onions and cilantro.",
+        "category": "Mexican",
+        "image": "https://example.com/images/ceviche.jpg",
+        "available": "Yes",
+        "notes": "Served cold"
+    },
+    {
+        "name": "Elote",
+        "price": 5.99,
+        "description": "Grilled corn on the cob with mayo, cheese, and chili powder.",
+        "category": "Mexican",
+        "image": "https://example.com/images/elote.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Butter Chicken",
+        "price": 13.99,
+        "description": "Chicken in a creamy tomato sauce, served with rice.",
+        "category": "Indian",
+        "image": "https://example.com/images/butter-chicken.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Biryani",
+        "price": 14.99,
+        "description": "Spiced rice dish with meat and vegetables.",
+        "category": "Indian",
+        "image": "https://example.com/images/biryani.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Paneer Tikka",
+        "price": 11.99,
+        "description": "Grilled cubes of paneer marinated in spices.",
+        "category": "Indian",
+        "image": "https://example.com/images/paneer-tikka.jpg",
+        "available": "Yes",
+        "notes": "Vegetarian"
+    },
+    {
+        "name": "Dal Makhani",
+        "price": 9.99,
+        "description": "Creamy black lentils simmered with spices.",
+        "category": "Indian",
+        "image": "https://example.com/images/dal-makhani.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Samosa",
+        "price": 5.99,
+        "description": "Spiced potato-filled pastries, deep-fried to perfection.",
+        "category": "Indian",
+        "image": "https://example.com/images/samosa.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Rogan Josh",
+        "price": 15.99,
+        "description": "Slow-cooked lamb in aromatic spices.",
+        "category": "Indian",
+        "image": "https://example.com/images/rogan-josh.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Chole Bhature",
+        "price": 10.49,
+        "description": "Spicy chickpeas served with deep-fried bread.",
+        "category": "Indian",
+        "image": "https://example.com/images/chole-bhature.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Palak Paneer",
+        "price": 12.99,
+        "description": "Paneer cheese in a creamy spinach sauce.",
+        "category": "Indian",
+        "image": "https://example.com/images/palak-paneer.jpg",
+        "available": "Yes",
+        "notes": "Vegetarian"
+    },
+    {
+        "name": "Aloo Gobi",
+        "price": 8.99,
+        "description": "Potatoes and cauliflower cooked with spices.",
+        "category": "Indian",
+        "image": "https://example.com/images/aloo-gobi.jpg",
+        "available": "Yes",
+        "notes": "Vegetarian"
+    },
+    {
+        "name": "Naan Bread",
+        "price": 2.99,
+        "description": "Soft, fluffy Indian bread, perfect for dipping.",
+        "category": "Indian",
+        "image": "https://example.com/images/naan-bread.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Margherita Pizza",
+        "price": 10.99,
+        "description": "Classic pizza topped with fresh tomatoes, mozzarella, and basil.",
+        "category": "Italian",
+        "image": "https://example.com/images/margherita-pizza.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Spaghetti Carbonara",
+        "price": 12.99,
+        "description": "Spaghetti pasta tossed with eggs, cheese, pancetta, and pepper.",
+        "category": "Italian",
+        "image": "https://example.com/images/spaghetti-carbonara.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Lasagna",
+        "price": 14.99,
+        "description": "Layers of pasta with meat, cheese, and tomato sauce.",
+        "category": "Italian",
+        "image": "https://example.com/images/lasagna.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Pesto Pasta",
+        "price": 11.49,
+        "description": "Pasta tossed in a creamy basil pesto sauce.",
+        "category": "Italian",
+        "image": "https://example.com/images/pesto-pasta.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Risotto",
+        "price": 13.49,
+        "description": "Creamy rice dish cooked with broth and flavored with herbs.",
+        "category": "Italian",
+        "image": "https://example.com/images/risotto.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Caprese Salad",
+        "price": 8.99,
+        "description": "Fresh mozzarella, tomatoes, and basil drizzled with balsamic glaze.",
+        "category": "Italian",
+        "image": "https://example.com/images/caprese-salad.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Fettuccine Alfredo",
+        "price": 11.99,
+        "description": "Fettuccine pasta in a rich and creamy Alfredo sauce.",
+        "category": "Italian",
+        "image": "https://example.com/images/fettuccine-alfredo.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Bruschetta",
+        "price": 6.99,
+        "description": "Grilled bread topped with fresh tomatoes and basil.",
+        "category": "Italian",
+        "image": "https://example.com/images/bruschetta.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Tiramisu",
+        "price": 5.99,
+        "description": "Classic Italian coffee-flavored dessert.",
+        "category": "Italian",
+        "image": "https://example.com/images/tiramisu.jpg",
+        "available": "Yes",
+        "notes": ""
+    },
+    {
+        "name": "Gelato",
+        "price": 4.99,
+        "description": "Italian-style ice cream available in various flavors.",
+        "category": "Italian",
+        "image": "https://example.com/images/gelato.jpg",
+        "available": "Yes",
+        "notes": ""
+    }
+]
