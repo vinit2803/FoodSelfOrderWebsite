@@ -17,6 +17,8 @@ app.use(bodyParser.json());
 // avaliable routes
 app.use("/api/menuitem", require("./routes/menuitemRoutes"));
 app.use("/api/auth", require("./routes/userRoutes"));
+app.use("/api/customer", require("./routes/customerRoutes"));
+app.use("/api/order", require("./routes/orderRoutes"));
 
 
 app.listen(port, () => {

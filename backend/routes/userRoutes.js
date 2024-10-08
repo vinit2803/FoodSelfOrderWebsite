@@ -140,10 +140,7 @@ router.put("/:id", userAuth, async (req, res) => {
 
     if (username) user.username = username;
     if (email) user.email = email;
-    if (password) {
-      const salt = await bcrypt.genSalt(10);
-      user.password = await bcrypt.hash(password, salt);
-    }
+    if (password) user.password = password;
 
     await user.save();
     res

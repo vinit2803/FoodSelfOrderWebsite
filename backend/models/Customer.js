@@ -15,9 +15,14 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phoneNumber: {
+  phonenumber: {
     type: Number,
     required: true,
+  },
+  role: {
+    type: String,
+    enum: ['customer'],
+    default: 'customer', // Can have roles such as admin, kitchen, or customer
   },
 }, {
   timestamps: true,
