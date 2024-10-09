@@ -7,22 +7,28 @@ import About from "./components/About";
 import ContactUs from "./components/ContactUs";
 import Cart from "./components/Cart";
 import Navbar from "./components/Navbar";
+import Alert from "./components/Alert";
+import AlertState from "./context/alert/AlertState";
 
 function App() {
+  
   return (
     <>
-      <MenuState>
-        <Router>
-          <Navbar></Navbar>
-          <Routes >
-            <Route path="/" element={<Home />} />
-            <Route path="/bill" element={<Bill />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contactus" element={<ContactUs />} />
-            <Route path="/cart" element={<Cart />} />
-          </Routes>
-        </Router>
-      </MenuState>
+      <AlertState>
+        <MenuState>
+          <Router>
+            <Navbar></Navbar>
+            <Alert alert={alert}></Alert>
+            <Routes>
+              <Route path="/" element={<Home  />} />
+              <Route path="/bill" element={<Bill />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contactus" element={<ContactUs />} />
+              <Route path="/cart" element={<Cart />} />
+            </Routes>
+          </Router>
+        </MenuState>
+      </AlertState>
     </>
   );
 }
