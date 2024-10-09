@@ -1,0 +1,98 @@
+/* Style for the navigation bar */
+.navbar {
+    background-color: #ffe3b0; /* Light orange background */
+    position: fixed; /* Fix the position at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ensure it stays on top */
+    padding: 10px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+    margin: 5px 10px 5px 10px;
+    border-radius: 35px;
+  }
+  
+  .brandLink{
+    text-decoration: none;
+    color: gray;
+    font-style:initial;
+  }
+  .navbar .brand {
+    font-size: 24px;
+    font-weight: bold;
+    padding-left: 20px;
+    color: #000000;
+  }
+  
+  .navbar .menu ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: flex-end;
+    padding-right: 20px;
+  }
+  
+  .navbar .menu ul li {
+    margin-left: 20px;
+  }
+  .navbar .menu ul li a {
+    color: #000000;
+    text-decoration: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    position: relative;
+    transition: transform 0.2s ease-in-out, background-color 0.3s ease-in-out;
+  }
+ 
+ 
+/* Active (Selected) Link */
+.navbar .menu ul li a.active {
+    background-color: #ff9f29; /* Keep the background color for the active link */
+    border-radius: 15px;
+    transform: scale(1.05); /* Slightly larger for the active state */
+    box-shadow: 0 5px 5px rgb(255, 140, 0)
+; /* Add a stronger shadow */
+  }
+  
+  /* Hover effect for all links */
+  .navbar .menu ul li a:hover {
+    background-color: #ff9f29; /* Darker orange for hover */
+    border-radius: 15px; /* Fix: removed 'px' */
+    transform: scale(1.1); /* Scale on hover */
+    box-shadow: 0 10px 10px rgb(162, 89, 0)
+; /* Add hover shadow */
+  }
+  
+  /* Animation keyframes for hover effect */
+  @keyframes farmerEffect {
+    0% {
+      transform: scale(1);
+      box-shadow: none;
+    }
+    50% {
+      transform: scale(1.2);
+      box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: none;
+    }
+  }
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    background: var(--red);
+    transform-origin: 0%;
+  }
+  .brand-logo {
+    height: 40px; /* Adjust the height of the logo */
+    margin-right: 2px; /* Space between the logo and brand name */
+    vertical-align: middle; /* Align the logo with the text */
+  }
+  body{
+    padding-top: 80px;
+  }
