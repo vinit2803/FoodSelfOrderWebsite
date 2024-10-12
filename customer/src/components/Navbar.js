@@ -1,9 +1,15 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import "../css/Navbar.css";
 import { motion } from "framer-motion";
 
 const Navbar = () => {
+  
+  const navigate = useNavigate();
+  const handlelogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
   return (
     <>
       <div className="navbar">
@@ -87,6 +93,23 @@ const Navbar = () => {
                   Contact Us
                 </NavLink>
               </motion.div>
+            </li>
+            
+            <li>
+            {!localStorage.getItem("token") ? (
+              <form className="d-flex" role="search">
+                <NavLink className="btn btn-primary" to="/Login">
+                  Login
+                </NavLink>
+                <NavLink className="btn btn-primary mx-2" to="/SignUp">
+                  SignUp
+                </NavLink>
+              </form>
+            ) : (
+              <button onClick={handlelogout} className="btn btn-primary">
+                LogOut
+              </button>
+            )}
             </li>
           </ul>
         </div>

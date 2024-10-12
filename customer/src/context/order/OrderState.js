@@ -17,7 +17,7 @@ const OrderState = (props) => {
         headers: {
           "Content-Type": "application/json",
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDU0ZGU0YmIyNDkxMjQ3OGYzZDk2MCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcyODc1MDM5OCwiZXhwIjoxNzI4NzUzOTk4fQ.o3jkZ6pvhCFSgmZ7b4-kB4ckgDZMFCThThFd312_5ys", // Replace with the actual token
+            `Bearer ${localStorage.getItem('token')}`, 
         },
         body: JSON.stringify({ customerId, tableNumber, items }),
       });
@@ -26,7 +26,7 @@ const OrderState = (props) => {
       if (!response.ok) {
         throw new Error("Error creating order");
       }
-      console.log(json);
+      
       setOrder(json);
     } catch (error) {
       console.error(error);

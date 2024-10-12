@@ -5,6 +5,7 @@ import "../css/Cart.css";
 import alertContext from "../context/alert/alertContext"; // Import alert context
 import orderContext from "../context/order/orderContext";
 import { useNavigate } from "react-router-dom";
+import customerContext from "../context/customer/customerContext";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -20,6 +21,9 @@ const Cart = () => {
     dispatch(decrement(id));
   };
 
+  const contextcustomer = useContext(customerContext);
+const{verifytoken} = contextcustomer;
+
   const context = useContext(orderContext);
   const { createOrder } = context;
   const [order, setOrder] = useState({
@@ -27,9 +31,11 @@ const Cart = () => {
     tableNumber: "",
     items: [],
   });
+
   const onChange = (e) => {
     setOrder({ ...order, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -38,49 +44,28 @@ const Cart = () => {
       showAlert("Your cart is empty. Add items to place an order.", "danger");
       return;
     }
-
+    // Fetch the customer ID using the token when "Place Order" is clicked
+    const customerId = await verifytoken();
+    if (!customerId) {
+      showAlert("Error retrieving customer information.", "danger");
+      return;
+    }
     // Prepare items for order
     const items = cartItems.map((item) => ({
       menuitemId: item._id,
       quantity: item.quantity,
     }));
 
-    await createOrder(order.customerId, order.tableNumber, items);
-navigate("/");
-    // const orderDetails = {
-    //   customerId: "67054de4bb24912478f3d960", // Replace with the actual customer ID
-    //   tableNumber: 5,
-    //   items: cartItems.map((item) => ({
-    //     menuitemId: item._id,
-    //     quantity: item.quantity,
-    //   })),
-    // };
+    // setOrder((prevOrder) => ({
+    //   ...prevOrder,
+    //   customerId, // Set the fetched customer ID here
+    // }));
 
-    // try {
-    //   const response = await fetch("http://localhost:5000/api/order/create", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       Authorization:
-    //         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3MDU0ZGU0YmIyNDkxMjQ3OGYzZDk2MCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTcyODc1MDM5OCwiZXhwIjoxNzI4NzUzOTk4fQ.o3jkZ6pvhCFSgmZ7b4-kB4ckgDZMFCThThFd312_5ys", // Replace with the actual token
-    //     },
-    //     body: JSON.stringify(orderDetails),
-    //   });
-
-    //   if (!response.ok) {
-    //     throw new Error("Failed to place the order");
-    //   }
-
-    //   const result = await response.json();
-    //   console.log(result);
-
-    //   showAlert("Order placed successfully!", "success"); // Show success alert
-    //   // Optionally, you can reset the cart or redirect the user after placing the order
-    //   // dispatch(resetCart()); // Uncomment if you want to reset the cart after placing the order
-    // } catch (error) {
-    //   console.error(error);
-    //   showAlert("Error placing the order. Please try again.", "danger"); // Show error alert
-    // }
+    // console.log(order.customerId);
+    
+    // await createOrder(order.customerId, order.tableNumber, items);
+    await createOrder(customerId, order.tableNumber, items);
+    navigate("/");
   };
 
   return (
@@ -131,13 +116,6 @@ navigate("/");
       </div>
       {/* Input Fields for Order Details */}
       <div>
-        <input
-          type="text"
-          name="customerId"
-          placeholder="Customer ID"
-          value={order.customerId}
-          onChange={onChange}
-        />
         <input
           type="number"
           name="tableNumber"
