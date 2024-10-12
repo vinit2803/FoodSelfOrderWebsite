@@ -4,7 +4,7 @@ const Joi = require("joi");
 const Order = require("../models/Order");
 const Menuitem = require("../models/MenuItem");
 const Customer = require("../models/Customer");
-const customerAuth = require("../middleware/customerAuth");
+const {customerAuth} = require("../middleware/customerAuth.js");
 const kitchenAuth = require("../middleware/kitchenAuth.js");
 
 // Joi validation schema for creating an order

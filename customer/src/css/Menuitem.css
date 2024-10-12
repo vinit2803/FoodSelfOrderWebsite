@@ -1,0 +1,12 @@
+.maindiv {
+  height: 100%;
+  width: 100%;
+}
+.divdisplay{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

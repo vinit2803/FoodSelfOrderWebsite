@@ -4,7 +4,10 @@ const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Customer = require("../models/Customer");
-const customerAuth = require("../middleware/customerAuth.js");
+const {
+  customerAuth,
+  tokenAuth,
+} = require("../middleware/customerAuth.js");
 const adminAuth = require("../middleware/verifyadmin.js");
 
 // Joi validation schema for customer
@@ -69,7 +72,6 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid email or password" });
     }
 
-   
     // Verify password using the comparePassword method
     const isMatch = await customer.comparePassword(password);
     if (!isMatch) {
@@ -102,6 +104,21 @@ router.get("/getallcustomer", adminAuth, async (req, res) => {
   }
 });
 
+// Find customer detail using authorization
+router.get('/profile', tokenAuth, async (req, res) => {
+  
+  try {
+    const customer = req.customer; // Retrieved from middleware
+    res.status(200).json({
+      id: customer._id,
+      name: customer.name,
+      email: customer.email,
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server Error', error });
+  }
+});
+
 // Get customer by ID
 router.get("/:id", customerAuth, async (req, res) => {
   try {
@@ -117,41 +134,44 @@ router.get("/:id", customerAuth, async (req, res) => {
 
 // Update customer by ID
 router.put("/:id", customerAuth, async (req, res) => {
-    // Validate request body using Joi
-    const { error } = customerSchema.validate(req.body);
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message });
+  // Validate request body using Joi
+  const { error } = customerSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
+
+  const { name, email, password, phonenumber } = req.body;
+
+  try {
+    const customer = await Customer.findById(req.params.id);
+    if (!customer) {
+      return res.status(404).json({ message: "Customer not found" });
     }
-  
-    const { name, email, password, phonenumber } = req.body;
-  
-    try {
-      const customer = await Customer.findById(req.params.id);
-      if (!customer) {
-        return res.status(404).json({ message: "Customer not found" });
-      }
-  
+
     //   Ensure customer can update their own profile
-    if(customer._id.toString()!== req.customer.id && req.customer.role !== 'customemr'){
-        return res
-        .status(403)
-        .json({
-          message: "Access denied. You can only update your own profile.",
-        });
+    if (
+      customer._id.toString() !== req.customer.id &&
+      req.customer.role !== "customemr"
+    ) {
+      return res.status(403).json({
+        message: "Access denied. You can only update your own profile.",
+      });
     }
-  
+
     if (name) customer.name = name;
     if (email) customer.email = email;
     if (password) customer.password = password;
     if (phonenumber) customer.phonenumber = phonenumber;
-  
-      await customer.save();
-  
-      res.status(200).json({ message: "Customer updated successfully", customer });
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
-  });
+
+    await customer.save();
+
+    res
+      .status(200)
+      .json({ message: "Customer updated successfully", customer });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
 
 // Delete customer by ID
 router.delete("/:id", customerAuth, async (req, res) => {
@@ -161,11 +181,11 @@ router.delete("/:id", customerAuth, async (req, res) => {
       return res.status(404).json({ message: "Customer not found" });
     }
 
-   
     res.status(200).json({ message: "Customer deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
+
 
 module.exports = router;

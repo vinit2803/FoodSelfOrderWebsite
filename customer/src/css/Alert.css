@@ -1,11 +1,11 @@
 /* Alert.css */
 
 .alert-container {
-    position: fixed; /* Fixed positioning to stay on the screen */
+    position: absolute; /* Fixed positioning to stay on the screen */
     top: 20px; /* Adjust the distance from the top */
     left: 50%; /* Center it horizontally */
     transform: translateX(-50%); /* Adjust for the element width */
-    z-index: 9999; /* Ensure it's above other components */
+    z-index: 1000; /* Ensure it's above other components */
     width: 300px; /* Set a fixed width or adjust as necessary */
     opacity: 0.9; /* Slightly transparent */
     padding-top: 60px;
