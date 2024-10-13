@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import alertContext from "../context/alert/alertContext"; // Ensure this path is correct
-import "../css/Alert.css"; // Import your CSS file
+// import "../css/Alert.css"; // Import your CSS file
 
 const Alert = () => {
   const { alert } = useContext(alertContext); // Access the alert from context

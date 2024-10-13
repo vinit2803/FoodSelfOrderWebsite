@@ -22,7 +22,7 @@ const Cart = () => {
   };
 
   const contextcustomer = useContext(customerContext);
-const{verifytoken} = contextcustomer;
+  const { verifytoken } = contextcustomer;
 
   const context = useContext(orderContext);
   const { createOrder } = context;
@@ -48,6 +48,7 @@ const{verifytoken} = contextcustomer;
     const customerId = await verifytoken();
     if (!customerId) {
       showAlert("Error retrieving customer information.", "danger");
+      showAlert("Please login before placing order.", "danger");
       return;
     }
     // Prepare items for order
@@ -62,7 +63,7 @@ const{verifytoken} = contextcustomer;
     // }));
 
     // console.log(order.customerId);
-    
+
     // await createOrder(order.customerId, order.tableNumber, items);
     await createOrder(customerId, order.tableNumber, items);
     navigate("/");

@@ -7,7 +7,7 @@ import About from "./components/About";
 import ContactUs from "./components/ContactUs";
 import Cart from "./components/Cart";
 import Navbar from "./components/Navbar";
-// import Alert from "./components/Alert";
+import Alert from "./components/Alert";
 import AlertState from "./context/alert/AlertState";
 import Menu from "./components/Menu";
 import OrderState from "./context/order/OrderState";
@@ -24,7 +24,7 @@ function App() {
             <Router>
               <CustomerState>
                 <Navbar></Navbar>
-                {/* <Alert alert={alert}></Alert> */}
+                <Alert alert={alert}></Alert>
                 <div style={{ paddingTop: "40px" }}>
                   <Routes>
                     <Route path="/" element={<Home />} />

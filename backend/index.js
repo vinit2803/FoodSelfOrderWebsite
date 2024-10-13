@@ -1,6 +1,7 @@
 const connectToMongo = require("./databse");
 const express = require("express");
 var cors = require("cors");
+const path = require("path");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
@@ -13,6 +14,9 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 // app.use("/uploads", express.static("uploads"));
+
+// Serve the 'uploads' folder statically
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // avaliable routes
 app.use("/api/menuitem", require("./routes/menuitemRoutes"));

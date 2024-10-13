@@ -3,6 +3,8 @@ import React from "react";
 
 const Menuitem = (props) => {
   const { menuItem } = props;
+  // console.log(menuItem.image);
+  
 
   return (
     <>
