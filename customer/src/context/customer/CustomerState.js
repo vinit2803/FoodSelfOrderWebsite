@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import CustomerContext from "./customerContext";
 import { useNavigate } from "react-router-dom";
+import alertContext from "../alert/alertContext";
 
 const CustomerState = (props) => {
   const port = 5000;
   const host = `http://localhost:${port}`;
   const navigate = useNavigate();
+  const { showAlert } = useContext(alertContext); // Access showAlert from context
 
   // login
   const login = async (email, password) => {
@@ -18,8 +20,10 @@ const CustomerState = (props) => {
         body: JSON.stringify({ email, password }),
       });
       const json = await response.json();
+// console.log(json);
 
       if (json.token != null) {
+        showAlert(json.message, "success");
         localStorage.setItem("token", json.token);
         navigate("/");
       }
@@ -41,7 +45,6 @@ const CustomerState = (props) => {
 
       const json = await response.json();
 
-     
       return json.id;
     } catch (error) {
       console.error(error);
@@ -49,7 +52,7 @@ const CustomerState = (props) => {
     }
   };
   return (
-    <CustomerContext.Provider value={{  login, verifytoken }}>
+    <CustomerContext.Provider value={{ login, verifytoken }}>
       {props.children}
     </CustomerContext.Provider>
   );
