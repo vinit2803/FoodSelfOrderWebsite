@@ -4,10 +4,7 @@ const Joi = require("joi");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Customer = require("../models/Customer");
-const {
-  customerAuth,
-  tokenAuth,
-} = require("../middleware/customerAuth.js");
+const { customerAuth, tokenAuth } = require("../middleware/customerAuth.js");
 const adminAuth = require("../middleware/verifyadmin.js");
 
 // Joi validation schema for customer
@@ -85,6 +82,12 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.JWT_SECRET === "production",
+      sameSite: "strict",
+      maxAge: 3600000,
+    });
     res.status(200).json({
       message: "Login successful",
       token,
@@ -105,8 +108,7 @@ router.get("/getallcustomer", adminAuth, async (req, res) => {
 });
 
 // Find customer detail using authorization
-router.get('/profile', tokenAuth, async (req, res) => {
-  
+router.get("/profile", tokenAuth, async (req, res) => {
   try {
     const customer = req.customer; // Retrieved from middleware
     res.status(200).json({
@@ -115,7 +117,7 @@ router.get('/profile', tokenAuth, async (req, res) => {
       email: customer.email,
     });
   } catch (error) {
-    res.status(500).json({ message: 'Server Error', error });
+    res.status(500).json({ message: "Server Error", error });
   }
 });
 
@@ -186,6 +188,5 @@ router.delete("/:id", customerAuth, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 
 module.exports = router;

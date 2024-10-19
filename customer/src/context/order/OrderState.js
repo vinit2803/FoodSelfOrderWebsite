@@ -48,7 +48,7 @@ const OrderState = (props) => {
         throw new Error("Error creating order");
       }
       showAlert("Order History fetched successfully", "success");
-      console.log(json);
+      
       
       return json;
     } catch (error) {

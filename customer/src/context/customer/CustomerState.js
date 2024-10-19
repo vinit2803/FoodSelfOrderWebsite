@@ -18,14 +18,18 @@ const CustomerState = (props) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
+        credentials: "include", // Ensure cookies are included in the request
       });
       const json = await response.json();
 // console.log(json);
 
-      if (json.token != null) {
+      
+    if (json.ok) {
         showAlert(json.message, "success");
-        localStorage.setItem("token", json.token);
+        // localStorage.setItem("token", json.token);
         navigate("/");
+      } else {
+        showAlert(json.message, "danger");
       }
     } catch (error) {
       console.error(error);

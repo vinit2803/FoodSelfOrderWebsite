@@ -22,35 +22,38 @@ const OrderHistory = () => {
 
   return (
     <>
-      <div className="order-history-container">
-        <h2>Order History</h2>
-        {order.length === 0 ? (
-          <p>No orders found</p>
-        ) : (
-          <div className="order-card-wrapper">
-            {order.map((order) => (
-              <div className="order-card" key={order._id}>
-                <h3>Order ID: {order._id}</h3>
-                <p>Table Number: {order.tableNumber}</p>
-                <p>
-                  Status: <strong>{order.status}</strong>
-                </p>
-                <p>Total Price: ${order.totalPrice.toFixed(2)}</p>
-                <p>
-                  Order Date: {new Date(order.createdAt).toLocaleDateString()}
-                </p>
-                <h4>Items Ordered:</h4>
-                <ul>
-                  {order.items.map((item) => (
-                    <li key={item._id}>
-                      Menu Item ID: {item.menuitemId}, Quantity: {item.quantity}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="container">
+        <div className="order-history-container">
+          <h2>Order History</h2>
+          {order.length === 0 ? (
+            <p>No orders found</p>
+          ) : (
+            <div className="order-card-wrapper">
+              {order.map((order) => (
+                <div className="order-card" key={order._id}>
+                  <h3>Order ID: {order._id}</h3>
+                  <p>Table Number: {order.tableNumber}</p>
+                  <p>
+                    Status: <strong>{order.status}</strong>
+                  </p>
+                  <p>Total Price: ${order.totalPrice.toFixed(2)}</p>
+                  <p>
+                    Order Date: {new Date(order.createdAt).toLocaleDateString()}
+                  </p>
+                  <h4>Items Ordered:</h4>
+                  <ul>
+                    {order.items.map((item) => (
+                      <li key={item._id}>
+                        Menu Item ID: {item.menuitemId}, Quantity:{" "}
+                        {item.quantity}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
