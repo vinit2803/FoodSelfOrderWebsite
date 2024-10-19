@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import "../css/Navbar.css";
 import { motion } from "framer-motion";
+import "../css/Navbar.css";
 
 const Navbar = () => {
   
@@ -96,19 +96,20 @@ const Navbar = () => {
             </li>
             
             <li>
+              
             {!localStorage.getItem("token") ? (
-              <form className="d-flex" role="search">
-                <NavLink className="btn btn-primary" to="/Login">
+              <form  role="search">
+                <NavLink  to="/Login">
                   Login
                 </NavLink>
-                <NavLink className="btn btn-primary mx-2" to="/SignUp">
+                <NavLink  to="/SignUp">
                   SignUp
                 </NavLink>
               </form>
             ) : (
-              <button onClick={handlelogout} className="btn btn-primary">
+              <NavLink onClick={handlelogout} >
                 LogOut
-              </button>
+              </NavLink>
             )}
             </li>
           </ul>

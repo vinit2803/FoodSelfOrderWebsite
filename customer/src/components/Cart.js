@@ -39,17 +39,24 @@ const Cart = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // to check table number
+    if (order.tableNumber === "") {
+      return showAlert("Please Enter a valid table number", "danger");
+    }
     // Check if there are items in the cart before placing the order
     if (cartItems.length === 0) {
-      showAlert("Your cart is empty. Add items to place an order.", "danger");
-      return;
+      return showAlert(
+        "Your cart is empty. Add items to place an order.",
+        "danger"
+      );
     }
     // Fetch the customer ID using the token when "Place Order" is clicked
     const customerId = await verifytoken();
     if (!customerId) {
-      showAlert("Error retrieving customer information.", "danger");
-      showAlert("Please login before placing order.", "danger");
-      return;
+      return showAlert(
+        "Error retrieving customer information. Please login before placing order.",
+        "danger"
+      );
     }
     // Prepare items for order
     const items = cartItems.map((item) => ({
@@ -57,14 +64,6 @@ const Cart = () => {
       quantity: item.quantity,
     }));
 
-    // setOrder((prevOrder) => ({
-    //   ...prevOrder,
-    //   customerId, // Set the fetched customer ID here
-    // }));
-
-    // console.log(order.customerId);
-
-    // await createOrder(order.customerId, order.tableNumber, items);
     await createOrder(customerId, order.tableNumber, items);
     navigate("/");
   };
@@ -73,6 +72,24 @@ const Cart = () => {
     <>
       <div className="cart-container">
         <h2>Your Cart</h2>
+        <div className="input-group mb-3">
+          <input
+            type="number"
+            name="tableNumber"
+            placeholder="Table Number"
+            value={order.tableNumber}
+            onChange={onChange}
+            className="form-control"
+            aria-label="Sizing example input"
+            aria-describedby="inputGroup-sizing-default"
+          />
+        </div>
+
+        <div className="container text-center">
+          <button onClick={handleSubmit} className="btn btn-primary">
+            Place Order
+          </button>
+        </div>
         {cartItems.length === 0 ? (
           <p>Your cart is empty</p>
         ) : (
@@ -116,20 +133,6 @@ const Cart = () => {
         )}
       </div>
       {/* Input Fields for Order Details */}
-      <div>
-        <input
-          type="number"
-          name="tableNumber"
-          placeholder="Table Number"
-          value={order.tableNumber}
-          onChange={onChange}
-        />
-      </div>
-      <div>
-        <button onClick={handleSubmit} className="btn btn-primary">
-          Place Order
-        </button>
-      </div>
     </>
   );
 };

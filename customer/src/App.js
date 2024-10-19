@@ -14,6 +14,7 @@ import OrderState from "./context/order/OrderState";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import CustomerState from "./context/customer/CustomerState";
+import OrderHistory from "./components/OrderHistory";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
                     <Route path="/menu" element={<Menu />} />
                     <Route path="/contactus" element={<ContactUs />} />
                     <Route path="/cart" element={<Cart />} />
+                    <Route path="/orderhistory" element={<OrderHistory />}/>
                   </Routes>
                 </div>
               </CustomerState>
