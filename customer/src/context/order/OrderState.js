@@ -32,8 +32,32 @@ const OrderState = (props) => {
     }
   };
 
+  // get order by customer id
+  const getorderhistory = async () => {
+    try {
+      // api call
+      const response = await fetch(`${host}/api/order/orderhistory`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const json = await response.json();
+      if (!response.ok) {
+        throw new Error("Error creating order");
+      }
+      showAlert("Order History fetched successfully", "success");
+      console.log(json);
+      
+      return json;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
   return (
-    <OrderContext.Provider value={{ order, createOrder }}>
+    <OrderContext.Provider value={{ order, createOrder ,getorderhistory}}>
       {props.children}
     </OrderContext.Provider>
   );

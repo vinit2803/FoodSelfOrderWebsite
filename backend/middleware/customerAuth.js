@@ -25,6 +25,7 @@ const customerAuth = async (req, res, next) => {
     res.status(400).json({ message: "Invalid token" });
   }
 };
+
 const tokenAuth = async (req, res, next) => {
   const token = req.header("Authorization")?.split(" ")[1];
 

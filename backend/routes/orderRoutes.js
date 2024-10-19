@@ -4,7 +4,7 @@ const Joi = require("joi");
 const Order = require("../models/Order");
 const Menuitem = require("../models/MenuItem");
 const Customer = require("../models/Customer");
-const {customerAuth} = require("../middleware/customerAuth.js");
+const { customerAuth, tokenAuth } = require("../middleware/customerAuth.js");
 const kitchenAuth = require("../middleware/kitchenAuth.js");
 
 // Joi validation schema for creating an order
@@ -44,7 +44,9 @@ router.post("/create", customerAuth, async (req, res) => {
     for (const item of items) {
       const menuitem = await Menuitem.findById(item.menuitemId);
       if (!menuitem) {
-        return res.status(404).json({ message: `Menu item not found: ${item.menuitemId}` });
+        return res
+          .status(404)
+          .json({ message: `Menu item not found: ${item.menuitemId}` });
       }
       totalPrice += menuitem.price * item.quantity;
     }
@@ -69,9 +71,32 @@ router.post("/create", customerAuth, async (req, res) => {
 });
 
 // Get all orders (Admin or kitchen)
-router.get("/getallorders",kitchenAuth, async (req, res) => {
+router.get("/getallorders", kitchenAuth, async (req, res) => {
   try {
     const orders = await Order.find();
+    res.status(200).json(orders);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// get order by customer
+router.get("/orderhistory", customerAuth, tokenAuth, async (req, res) => {
+  try {
+    const customerId = req.customer._id;
+
+
+
+    // find order by customer id
+    const orders = await Order.find({customerId : customerId});
+
+
+    if (!orders || orders.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No orders found for this customer" });
+    }
+
     res.status(200).json(orders);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -81,7 +106,9 @@ router.get("/getallorders",kitchenAuth, async (req, res) => {
 // Get order by ID
 router.get("/:id", kitchenAuth, async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id).populate("customerId items.menuitemId");
+    const order = await Order.findById(req.params.id).populate(
+      "customerId items.menuitemId"
+    );
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
     }
@@ -109,7 +136,9 @@ router.put("/:id/status", kitchenAuth, async (req, res) => {
     order.status = status;
     await order.save();
 
-    res.status(200).json({ message: "Order status updated successfully", order });
+    res
+      .status(200)
+      .json({ message: "Order status updated successfully", order });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -135,7 +164,9 @@ router.put("/:id", customerAuth, async (req, res) => {
     for (const item of items) {
       const menuitem = await Menuitem.findById(item.menuitemId);
       if (!menuitem) {
-        return res.status(404).json({ message: `Menu item not found: ${item.menuitemId}` });
+        return res
+          .status(404)
+          .json({ message: `Menu item not found: ${item.menuitemId}` });
       }
       totalPrice += menuitem.price * item.quantity;
     }
@@ -161,7 +192,6 @@ router.delete("/:id", kitchenAuth, async (req, res) => {
       return res.status(404).json({ message: "Order not found" });
     }
 
-   
     res.status(200).json({ message: "Order deleted successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });

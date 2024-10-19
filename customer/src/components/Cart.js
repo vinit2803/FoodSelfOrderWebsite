@@ -65,7 +65,7 @@ const Cart = () => {
     }));
 
     await createOrder(customerId, order.tableNumber, items);
-    navigate("/");
+    navigate("/orderhistory");
   };
 
   return (
