@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CustomerContext from "./customerContext";
 import { useNavigate } from "react-router-dom";
 import alertContext from "../alert/alertContext";
@@ -9,6 +9,7 @@ const CustomerState = (props) => {
   const navigate = useNavigate();
   const { showAlert } = useContext(alertContext); // Access showAlert from context
 
+  const [success, setSuccess] = useState(false);
   // login
   const login = async (email, password) => {
     try {
@@ -21,12 +22,10 @@ const CustomerState = (props) => {
         credentials: "include", // Ensure cookies are included in the request
       });
       const json = await response.json();
-// console.log(json);
 
-      
-    if (json.ok) {
+      if (json.token != null) {
         showAlert(json.message, "success");
-        // localStorage.setItem("token", json.token);
+        setSuccess(json.success);
         navigate("/");
       } else {
         showAlert(json.message, "danger");
@@ -37,26 +36,70 @@ const CustomerState = (props) => {
   };
 
   //   from token and get cutomerid
+  // verifytoken function - CustomerState.js
   const verifytoken = async () => {
     try {
       const response = await fetch(`${host}/api/customer/profile`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
+        credentials: "include", // Ensure cookies are included in the request
       });
 
       const json = await response.json();
 
-      return json.id;
+      if (response.ok) {
+        return json; // Return customer ID if verification succeeds
+      } else {
+        console.error("Token verification failed");
+        return null;
+      }
     } catch (error) {
       console.error(error);
       return null;
     }
   };
+
+  const checkauthlogin = async () => {
+    try {
+      const response = await fetch(`${host}/api/customer/checkauth`, {
+        method: "GET",
+        credentials: "include", // Make sure this is included to send cookies
+      });
+      const json = await response.json();
+      setSuccess(json.isAuthenticated); // Updating your context state
+      return json; // Return the whole response (with isAuthenticated and user info)
+    } catch (error) {
+      console.error(error);
+      return { isAuthenticated: false }; // Return an object even in case of error
+    }
+  };
+
+  const logout = async () => {
+    try {
+      const response = await fetch(`${host}/api/customer/logout`, {
+        method: "POST",
+        credentials: "include", // Ensure cookies are included
+      });
+     
+
+      if (response.ok) {
+        setSuccess(false);
+        showAlert("Logout successfully", "success");
+        navigate("/login"); // Redirect to login page
+      } else {
+        showAlert("falied to logout", "danger");
+      }
+    } catch (error) {
+      showAlert("falied to logout", "danger");
+    }
+  };
+
   return (
-    <CustomerContext.Provider value={{ login, verifytoken }}>
+    <CustomerContext.Provider
+      value={{ success, login, verifytoken, checkauthlogin, logout }}
+    >
       {props.children}
     </CustomerContext.Provider>
   );

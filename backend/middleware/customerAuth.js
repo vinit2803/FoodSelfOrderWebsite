@@ -3,7 +3,8 @@ const Customer = require("../models/Customer");
 const { constants } = require("fs");
 
 const customerAuth = async (req, res, next) => {
-  const token = req.header("Authorization")?.split(" ")[1];
+  // const token = req.header("Authorization")?.split(" ")[1];
+  const token = req.cookies.token;
   if (!token) {
     return res
       .status(401)
@@ -27,8 +28,8 @@ const customerAuth = async (req, res, next) => {
 };
 
 const tokenAuth = async (req, res, next) => {
-  const token = req.header("Authorization")?.split(" ")[1];
-
+  // const token = req.header("Authorization")?.split(" ")[1];
+  const token = req.cookies.token;
   if (!token) {
     return res
       .status(401)

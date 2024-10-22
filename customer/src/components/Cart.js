@@ -53,8 +53,8 @@ const Cart = () => {
       return showAlert("Your cart is empty. Add items to place an order.", "danger");
     }
 
-    const customerId = await verifytoken();
-    if (!customerId) {
+    const customer = await verifytoken();
+    if (!customer.id) {
       return showAlert("Error retrieving customer information. Please login before placing order.", "danger");
     }
 
@@ -65,9 +65,9 @@ const Cart = () => {
 
     setLoading(true); 
     try {
-      await createOrder(customerId, order.tableNumber, items);
+      await createOrder(customer.id, order.tableNumber, items);
       showAlert("Order placed successfully!", "success");
-      socket.emit("orderPlaced", { customerId, tableNumber: order.tableNumber, items }); // Emit orderPlaced event
+      socket.emit("orderPlaced", { customer, tableNumber: order.tableNumber, items }); // Emit orderPlaced event
       navigate("/orderhistory");
     } catch (error) {
       showAlert("Error placing the order. Please try again.", "danger");

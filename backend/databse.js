@@ -9,6 +9,7 @@ const connectToMongo = () => {
     .connect(mongoURI)
     .then(() => {
       console.log("Connected to mongoDatabase");
+      
       // Read the json file
       fs.readFile("data.json", "utf8", async (err, data) => {
         if (err) {

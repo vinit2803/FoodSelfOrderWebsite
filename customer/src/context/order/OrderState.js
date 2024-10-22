@@ -17,18 +17,21 @@ const OrderState = (props) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          // Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ customerId, tableNumber, items }),
+        credentials: "include",
       });
       const json = await response.json();
-      showAlert("Your Order has been placed successfully", "success");
-      if (!response.ok) {
-        throw new Error("Error creating order");
+      if (response.ok) {
+        showAlert("Your order has been placed successfully", "success");
+        setOrder(json); // Update state with the new order
+      } else {
+        throw new Error(json.message || "Error creating order");
       }
-      setOrder(json);
     } catch (error) {
-      console.error(error);
+      console.error("Error creating order:", error);
+      showAlert("Error creating order", "danger");
     }
   };
 
@@ -40,16 +43,16 @@ const OrderState = (props) => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+         
         },
+        credentials: "include",
       });
       const json = await response.json();
       if (!response.ok) {
         throw new Error("Error creating order");
       }
       showAlert("Order History fetched successfully", "success");
-      
-      
+
       return json;
     } catch (error) {
       console.error(error);
@@ -57,7 +60,7 @@ const OrderState = (props) => {
     }
   };
   return (
-    <OrderContext.Provider value={{ order, createOrder ,getorderhistory}}>
+    <OrderContext.Provider value={{ order, createOrder, getorderhistory }}>
       {props.children}
     </OrderContext.Provider>
   );

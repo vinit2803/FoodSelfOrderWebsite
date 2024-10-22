@@ -15,6 +15,49 @@ const customerSchema = Joi.object({
   phonenumber: Joi.number().required(),
 });
 
+// Check authentication using API
+router.get("/checkauth", (req, res) => {
+  const token = req.cookies.token;
+
+  // Check if token is missing
+  if (!token) {
+    return res.status(200).json({
+      isAuthenticated: false,
+      message: "Token missing. Please login.",
+    });
+  }
+
+  // Verify the token
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(200).json({
+        isAuthenticated: false,
+        message: "Invalid token. Please login.",
+      });
+    }
+
+    // If the token is valid, return authenticated status
+    return res.status(200).json({
+      isAuthenticated: true,
+      userId: decoded.id, // Return user ID or any other info if needed
+    });
+  });
+});
+
+// Logout route
+router.post("/logout", (req, res) => {
+  // Clear the token cookie
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true, // Use secure in production
+    sameSite: "strict",
+  });
+
+  // Optionally send a response confirming the logout
+  return res.status(200).json({ message: "Logged out successfully" });
+});
+
+
 // Customer registration route
 router.post("/register", async (req, res) => {
   // Validate request body using Joi
@@ -62,6 +105,13 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
+    // // Validate request body using Joi
+    // const { error } = customerSchema.validate();
+    // if (error) {
+    //   return res.status(400).json({ message: error.details[0].message });
+    // }
+  
+
   try {
     // Check if customer exists
     const customer = await Customer.findOne({ email });
@@ -84,11 +134,13 @@ router.post("/login", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.JWT_SECRET === "production",
+      secure: true,
       sameSite: "strict",
       maxAge: 3600000,
     });
+
     res.status(200).json({
+      success: true,
       message: "Login successful",
       token,
     });
@@ -112,6 +164,7 @@ router.get("/profile", tokenAuth, async (req, res) => {
   try {
     const customer = req.customer; // Retrieved from middleware
     res.status(200).json({
+      isAuthenticated: true,
       id: customer._id,
       name: customer.name,
       email: customer.email,
@@ -146,6 +199,8 @@ router.put("/:id", customerAuth, async (req, res) => {
 
   try {
     const customer = await Customer.findById(req.params.id);
+    
+    
     if (!customer) {
       return res.status(404).json({ message: "Customer not found" });
     }
