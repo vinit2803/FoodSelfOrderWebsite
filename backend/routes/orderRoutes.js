@@ -85,11 +85,8 @@ router.get("/orderhistory", customerAuth, tokenAuth, async (req, res) => {
   try {
     const customerId = req.customer._id;
 
-
-
     // find order by customer id
-    const orders = await Order.find({customerId : customerId});
-
+    const orders = await Order.find({ customerId: customerId });
 
     if (!orders || orders.length === 0) {
       return res

@@ -24,7 +24,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     await logout();
-    setIsLoggedIn(false)
+    setIsLoggedIn(false);
   };
 
   return (

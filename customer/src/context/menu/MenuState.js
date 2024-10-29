@@ -17,7 +17,7 @@ const MenuState = (props) => {
       },
     });
     const json = await response.json();
-    // console.log(json);
+   
     
     setMenu(json);
   };

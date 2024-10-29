@@ -23,7 +23,7 @@ const CustomerState = (props) => {
       });
       const json = await response.json();
 
-      if (json.token != null) {
+      if (json.CustomerId != null) {
         showAlert(json.message, "success");
         setSuccess(json.success);
         navigate("/");
@@ -82,6 +82,7 @@ const CustomerState = (props) => {
         method: "POST",
         credentials: "include", // Ensure cookies are included
       });
+     console.log(response.ok);
      
 
       if (response.ok) {

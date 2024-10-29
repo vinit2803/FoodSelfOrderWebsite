@@ -2,21 +2,21 @@ import React, { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "../state/actions/cartActions";
 import "../css/Cart.css";
-import alertContext from "../context/alert/alertContext"; 
+import alertContext from "../context/alert/alertContext";
 import orderContext from "../context/order/orderContext";
 import { useNavigate } from "react-router-dom";
 import customerContext from "../context/customer/customerContext";
 import io from "socket.io-client";
 
 // Connect to your Socket.IO server
-const socket = io('http://localhost:5000', {
+const socket = io("http://localhost:5000", {
   withCredentials: true, // Set to true if you want to include credentials with requests
 });
 const Cart = () => {
   const navigate = useNavigate();
   const cartItems = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
-  const { showAlert } = useContext(alertContext); 
+  const { showAlert } = useContext(alertContext);
 
   const handleIncrement = (item) => {
     dispatch(increment(item));
@@ -27,7 +27,7 @@ const Cart = () => {
   };
 
   const contextcustomer = useContext(customerContext);
-  const { verifytoken } = contextcustomer;
+  const { checkauthlogin } = contextcustomer;
 
   const context = useContext(orderContext);
   const { createOrder } = context;
@@ -36,7 +36,7 @@ const Cart = () => {
     tableNumber: "",
     items: [],
   });
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   const onChange = (e) => {
     setOrder({ ...order, [e.target.name]: e.target.value });
@@ -45,17 +45,25 @@ const Cart = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (order.tableNumber === "" || isNaN(order.tableNumber) || order.tableNumber <= 0) {
+    const customer = await checkauthlogin();
+    if (!customer.isAuthenticated) {
+      navigate("/login");
+      return showAlert("Please login before placing order.", "danger");
+    }
+
+    if (
+      order.tableNumber === "" ||
+      isNaN(order.tableNumber) ||
+      order.tableNumber <= 0
+    ) {
       return showAlert("Please enter a valid table number", "danger");
     }
 
     if (cartItems.length === 0) {
-      return showAlert("Your cart is empty. Add items to place an order.", "danger");
-    }
-
-    const customer = await verifytoken();
-    if (!customer.id) {
-      return showAlert("Error retrieving customer information. Please login before placing order.", "danger");
+      return showAlert(
+        "Your cart is empty. Add items to place an order.",
+        "danger"
+      );
     }
 
     const items = cartItems.map((item) => ({
@@ -63,23 +71,30 @@ const Cart = () => {
       quantity: item.quantity,
     }));
 
-    setLoading(true); 
+    setLoading(true);
     try {
-      await createOrder(customer.id, order.tableNumber, items);
+      await createOrder(customer.userId, order.tableNumber, items);
       showAlert("Order placed successfully!", "success");
-      socket.emit("orderPlaced", { customer, tableNumber: order.tableNumber, items }); // Emit orderPlaced event
+      socket.emit("orderPlaced", {
+        customer,
+        tableNumber: order.tableNumber,
+        items,
+      }); // Emit orderPlaced event
       navigate("/orderhistory");
     } catch (error) {
       showAlert("Error placing the order. Please try again.", "danger");
     } finally {
-      setLoading(false); 
+      setLoading(false);
     }
   };
 
   useEffect(() => {
     // Listen for order status updates from the kitchen
     socket.on("orderStatusUpdated", (orderData) => {
-      showAlert(`Order ${orderData.id} status updated to: ${orderData.status}`, "info");
+      showAlert(
+        `Order ${orderData.id} status updated to: ${orderData.status}`,
+        "info"
+      );
     });
 
     // Cleanup on unmount
@@ -106,7 +121,11 @@ const Cart = () => {
         </div>
 
         <div className="container text-center">
-          <button onClick={handleSubmit} className="btn btn-primary" disabled={loading}>
+          <button
+            onClick={handleSubmit}
+            className="btn btn-primary"
+            disabled={loading}
+          >
             {loading ? "Placing Order..." : "Place Order"}
           </button>
         </div>
@@ -124,8 +143,13 @@ const Cart = () => {
                 />
                 <div className="cart-item-details">
                   <h5>{item.name}</h5>
-                  <p><strong>Price:</strong> ${item.price}</p>
-                  <p><strong>Total:</strong> ${(item.price * item.quantity).toFixed(2)}</p>
+                  <p>
+                    <strong>Price:</strong> ${item.price}
+                  </p>
+                  <p>
+                    <strong>Total:</strong> $
+                    {(item.price * item.quantity).toFixed(2)}
+                  </p>
                   <div className="cart-item-controls">
                     <button
                       className="btn-decrement"

@@ -17,10 +17,10 @@ const customerSchema = Joi.object({
 
 // Check authentication using API
 router.get("/checkauth", (req, res) => {
-  const token = req.cookies.token;
+  const CustomerId = req.cookies.CustomerId;
 
   // Check if token is missing
-  if (!token) {
+  if (!CustomerId) {
     return res.status(200).json({
       isAuthenticated: false,
       message: "Token missing. Please login.",
@@ -28,7 +28,7 @@ router.get("/checkauth", (req, res) => {
   }
 
   // Verify the token
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+  jwt.verify(CustomerId, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
       return res.status(200).json({
         isAuthenticated: false,
@@ -47,16 +47,16 @@ router.get("/checkauth", (req, res) => {
 // Logout route
 router.post("/logout", (req, res) => {
   // Clear the token cookie
-  res.clearCookie("token", {
+  res.clearCookie("CustomerId", {
     httpOnly: true,
     secure: true, // Use secure in production
     sameSite: "strict",
   });
 
+
   // Optionally send a response confirming the logout
   return res.status(200).json({ message: "Logged out successfully" });
 });
-
 
 // Customer registration route
 router.post("/register", async (req, res) => {
@@ -86,7 +86,7 @@ router.post("/register", async (req, res) => {
     await newCustomer.save();
 
     // Generate JWT token for authentication
-    const token = jwt.sign(
+    const CustomerId = jwt.sign(
       { id: newCustomer._id, role: "customer" },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
@@ -94,7 +94,7 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json({
       message: "Customer registered successfully",
-      token,
+      CustomerId,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -105,12 +105,11 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
-    // // Validate request body using Joi
-    // const { error } = customerSchema.validate();
-    // if (error) {
-    //   return res.status(400).json({ message: error.details[0].message });
-    // }
-  
+  // // Validate request body using Joi
+  // const { error } = customerSchema.validate();
+  // if (error) {
+  //   return res.status(400).json({ message: error.details[0].message });
+  // }
 
   try {
     // Check if customer exists
@@ -126,13 +125,13 @@ router.post("/login", async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign(
+    const CustomerId = jwt.sign(
       { id: customer._id, role: "customer" },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    res.cookie("token", token, {
+    res.cookie("CustomerId", CustomerId, {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
@@ -142,7 +141,7 @@ router.post("/login", async (req, res) => {
     res.status(200).json({
       success: true,
       message: "Login successful",
-      token,
+      CustomerId,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -199,8 +198,7 @@ router.put("/:id", customerAuth, async (req, res) => {
 
   try {
     const customer = await Customer.findById(req.params.id);
-    
-    
+
     if (!customer) {
       return res.status(404).json({ message: "Customer not found" });
     }

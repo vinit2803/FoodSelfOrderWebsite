@@ -4,15 +4,17 @@ const { constants } = require("fs");
 
 const customerAuth = async (req, res, next) => {
   // const token = req.header("Authorization")?.split(" ")[1];
-  const token = req.cookies.token;
-  if (!token) {
+  const CustomerId = req.cookies.CustomerId;
+  console.log(CustomerId);
+  
+  if (!CustomerId) {
     return res
       .status(401)
       .json({ message: "Access denied. No token provided." });
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(CustomerId, process.env.JWT_SECRET);
     req.customer = decoded;
 
     // check customer role is customer
@@ -29,15 +31,15 @@ const customerAuth = async (req, res, next) => {
 
 const tokenAuth = async (req, res, next) => {
   // const token = req.header("Authorization")?.split(" ")[1];
-  const token = req.cookies.token;
-  if (!token) {
+  const CustomerId = req.cookies.CustomerId;
+  if (!CustomerId) {
     return res
       .status(401)
       .json({ message: "Access denied. No token provided." });
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(CustomerId, process.env.JWT_SECRET);
 
     // Check customer role is "customer"
     const customer = await Customer.findById(decoded.id);
