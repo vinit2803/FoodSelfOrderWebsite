@@ -24,11 +24,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "cross-env PORT=4000 react-scripts start",
+    "start": "cross-env react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "all": "concurrently \"nodemon ../backend/index.js\" \"npm run start\" \"cd ../kitchen && npm run start\""
+    "all": "concurrently \"nodemon ../backend/index.js\" \"npm run start\" \"cd ../kitchen && npm run start\"",
+    "customer": "concurrently \"nodemon ../backend/index.js\" \"npm run start\""
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +50,7 @@
     ]
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "webpack-dev-server": "^5.1.0"
   }
 }
